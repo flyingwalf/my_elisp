@@ -17,27 +17,16 @@
 ;;Using ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;;Set parentheses matching mode
-(setq show-paren-delay 0)
-(show-paren-mode 1)
-
 ;;Split the window vertically by default
 (setq split-height-threshold nil)
 (setq split-width-threshold 0)
 
-;;Using mlpa package
-(require 'package)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PACKAGE: company              ;;
-;;                               ;;
-;; GROUP: Convenience -> Company ;;
-;; This must be done by after    ;;
-;; install the company package   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'after-init-hook 'global-company-mode)
+;;Set hook for enable gtags mode in C/C++ and java files
+(require 'ggtags)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+              (ggtags-mode 1))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
